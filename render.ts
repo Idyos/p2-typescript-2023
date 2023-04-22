@@ -1,4 +1,5 @@
-import { User } from "./users.js";
+import { Countries } from "./Countriees.js";
+import { Country } from "./country.js";
 
 const head = (title: string) => `
 <head>
@@ -11,49 +12,101 @@ const head = (title: string) => `
       margin: 0;
       padding: 0;
     }
-    .user {
+
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .country {
+      margin: 1.4rem;
+      box-shadow: 0px 2px 18px 0px #8f8f8f;
+      border-radius: 20px;
       font-family: sans-serif;
+      position: relative;
       display: flex;
       flex-direction: row;
-      align-items: center;
-      padding: .4rem;
-      border-bottom: 1px solid #ddd;
     }
-    .user img {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      margin-right: 0.7rem;
+    .country img {
+      max-height: 25vh;
+      border-radius: 10px;
     }
-    .user .name {
+    .country .name {
+      text-align: center;
       font-weight: bold;
+      font-size: 2.5rem;
     }
-    .user .email {
-      font-family: monospace;
+    .country .data {
+      border-radius: 10px;
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      display: flex;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1.3);
+      background-color: white;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: 0.3s ease-in-out;
+    }
+    .country .info{
+      text-align: center;
+    }
+
+    .country:hover{
+      cursor: pointer; 
+    }
+
+    .country:hover > .data {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      transition: 0.3s ease-in-out;
     }
   </style>
 </head>`;
 
-const renderUsers = (users: Array<User>) => {
+const renderCountries = (countries: Array<Countries>) => {
   let html = "";
-  for (const user of users) {
-    html += `<div class="user">
-      <img src="${user.picture.medium}" />
+  for (const country of countries) {
+    html += `<div class="country">
+      <img src="${country.flags.png}" />
       <div class="data">
-        <div class="name">${user.fullName}</div>
-        <div class="email">${user.email}</div>
+        <div class="name">${country.name.common}</div>
+        <div class="info"><b>Capital:</b> ${country.capital} <b>Continent:</b> ${country.region}</div>
       </div>
     </div>`;
   }
   return html;
 }
 
-export const render = (users: Array<User>) => {
+const renderCountry = (name: string) => {
+  let html = "";
+  for (const country of name) {
+    html += `<div class="country">
+      <img src="" />
+      <div class="data">
+        <div class="name"></div>
+        <div class="info"><b>Capital:</b>  <b>Continent:</b> </div>
+      </div>
+    </div>`;
+  }
+  return html;
+}
+
+
+export const render = (countries: Array<Countries>, name: string="") => {
   return `
 <html>
-  ${head("User List")}
+  ${head("All countries in the world")}
   <body>
-    ${renderUsers(users)}
+  <div class="grid">
+  ${countries.length!==0 ? renderCountries(countries) : renderCountry(name)}
   </body>
+  </div>
 </html>`;
 };
