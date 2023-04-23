@@ -31,7 +31,7 @@ export class Countries {
 
 export const loadCountries = async () => {
   const response = await fetch(`https://restcountries.com/v3.1/all`);
-  const  results  = (await response.json());
+  const  results  = await response.json() as Countries[];
   const countries: Array<Countries> = [];
   for (const {name, currencies, capital, region, subregion, languages, flags} of results) {
     countries.push(new Countries(name, currencies, capital, region, subregion, languages, flags));
