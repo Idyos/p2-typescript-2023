@@ -3,6 +3,7 @@
   "module": "main.ts",
   "type": "module",
   "devDependencies": {
+    "@types/node": "^18.16.0",
     "bun-types": "^0.5.0"
   }
 }
